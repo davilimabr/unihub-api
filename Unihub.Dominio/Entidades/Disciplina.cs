@@ -1,6 +1,4 @@
-﻿using Unihub.Dominio.Entidades;
-
-namespace unihub_api.Dominio.Entidades
+﻿namespace Unihub.Dominio.Entidades
 {
     public class Disciplina
     {
@@ -15,6 +13,7 @@ namespace unihub_api.Dominio.Entidades
         public ICollection<AulasNaSemana> AulasNaSemanas { get;  set; }
         public ICollection<Atividade> Atividades { get;  set; }
         public ICollection<AlunosDisciplina> AlunosDisciplinas { get;  set; }
+        public ICollection<Falta> Faltas { get; set; }
         public Professor Professor { get;  set; }
 
         public Disciplina(
@@ -66,6 +65,9 @@ namespace unihub_api.Dominio.Entidades
 
             if (string.IsNullOrWhiteSpace(sala))
                 throw new ArgumentException("A sala não pode ser vazia ou nula.", nameof(sala));
+
+            if(descricao.Length > 500)
+                throw new ArgumentException("A descricao deve possuir um valor menor que 500 caracteres.", nameof(descricao));
 
             if (totalHoras < 0)
                 throw new ArgumentException("O total de horas não pode ser negativo.", nameof(totalHoras));

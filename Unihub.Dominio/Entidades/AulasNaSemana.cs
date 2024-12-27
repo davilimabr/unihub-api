@@ -1,6 +1,4 @@
-﻿using unihub_api.Dominio.Entidades;
-
-namespace Unihub.Dominio.Entidades
+﻿namespace Unihub.Dominio.Entidades
 {
     public class AulasNaSemana
     {

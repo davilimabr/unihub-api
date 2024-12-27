@@ -1,5 +1,5 @@
-﻿namespace unihub_api.Dominio.Entidades
-{
+﻿namespace Unihub.Dominio.Entidades 
+{ 
     public class Atividade
     {
         public int Id { get; private set; }

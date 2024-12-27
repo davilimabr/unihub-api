@@ -10,6 +10,7 @@ namespace Unihub.Dominio.Entidades
         public DiasDaSemana Dia { get; private set; }
 
         public ICollection<AulasNaSemana> AulasNaSemanas { get; set; }
+        public ICollection<Falta> Faltas { get; set; }
 
         public HorarioAula(int horaInicio, int horaTermino, DiasDaSemana dia)
         {

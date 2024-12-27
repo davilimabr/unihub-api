@@ -1,4 +1,4 @@
-﻿namespace unihub_api.Dominio.Entidades
+﻿namespace Unihub.Dominio.Entidades
 {
     public class Falta
     {
@@ -7,7 +7,11 @@
         public string Motivo { get; private set; }
 
         public int AlunoId { get; private set; }
+        public int DisciplinaId { get; private set; }
+        public int HorarioAulaId { get; private set; }
         public Aluno Aluno { get; private set; }
+        public Disciplina Disciplina { get; private set; }
+        public HorarioAula HorarioAula { get; private set; }
 
         public Falta(DateTime data, string motivo, int alunoId)
         {

@@ -1,4 +1,4 @@
-﻿namespace unihub_api.Dominio.Entidades
+﻿namespace Unihub.Dominio.Entidades
 {
     public class Nota
     {
