@@ -84,29 +84,6 @@ namespace Unihub.Infraestrutura.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Falta",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Motivo = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AlunoId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Falta", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Falta_Aluno_AlunoId",
-                        column: x => x.AlunoId,
-                        principalTable: "Aluno",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Disciplina",
                 columns: table => new
                 {
@@ -229,6 +206,43 @@ namespace Unihub.Infraestrutura.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Falta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Motivo = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AlunoId = table.Column<int>(type: "int", nullable: false),
+                    DisciplinaId = table.Column<int>(type: "int", nullable: false),
+                    HorarioAulaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Falta", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Falta_Aluno_AlunoId",
+                        column: x => x.AlunoId,
+                        principalTable: "Aluno",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Falta_Disciplina_DisciplinaId",
+                        column: x => x.DisciplinaId,
+                        principalTable: "Disciplina",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Falta_HorarioAula_HorarioAulaId",
+                        column: x => x.HorarioAulaId,
+                        principalTable: "HorarioAula",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AlunosDisciplina_AlunoId",
                 table: "AlunosDisciplina",
@@ -274,6 +288,16 @@ namespace Unihub.Infraestrutura.Migrations
                 name: "IX_Falta_AlunoId",
                 table: "Falta",
                 column: "AlunoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Falta_DisciplinaId",
+                table: "Falta",
+                column: "DisciplinaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Falta_HorarioAulaId",
+                table: "Falta",
+                column: "HorarioAulaId");
         }
 
         /// <inheritdoc />
@@ -295,13 +319,13 @@ namespace Unihub.Infraestrutura.Migrations
                 name: "Nota");
 
             migrationBuilder.DropTable(
+                name: "Aluno");
+
+            migrationBuilder.DropTable(
                 name: "Disciplina");
 
             migrationBuilder.DropTable(
                 name: "HorarioAula");
-
-            migrationBuilder.DropTable(
-                name: "Aluno");
 
             migrationBuilder.DropTable(
                 name: "Professor");

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using unihub_api.Dominio.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Unihub.Dominio.Entidades;
 
-namespace unihub_api.Infraestrutura.ConfiguracaoEntidades
+namespace Unihub.Infraestrutura.ConfiguracaoEntidades
 {
     public class FaltaConfiguracao : IEntityTypeConfiguration<Falta>
     {
@@ -19,7 +19,18 @@ namespace unihub_api.Infraestrutura.ConfiguracaoEntidades
 
             builder.HasOne(x => x.Aluno)
                    .WithMany(x => x.Faltas)
-                   .HasForeignKey(x => x.AlunoId);
+                   .HasForeignKey(x => x.AlunoId)
+                   .HasPrincipalKey(x => x.Id);
+
+            builder.HasOne(x => x.Disciplina)
+                   .WithMany(x => x.Faltas)
+                   .HasForeignKey(x => x.DisciplinaId)
+                   .HasPrincipalKey(x => x.Id);
+
+            builder.HasOne(x => x.HorarioAula)
+                  .WithMany(x => x.Faltas)
+                  .HasForeignKey(x => x.HorarioAulaId)
+                  .HasPrincipalKey(x => x.Id);
         }
     }
 }

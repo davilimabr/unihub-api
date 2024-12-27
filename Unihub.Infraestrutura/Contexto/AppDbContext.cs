@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Unihub.Dominio.Entidades;
-using unihub_api.Dominio.Entidades;
 
-namespace unihub_api.Infraestrutura.Configuracao
+namespace Unihub.Infraestrutura.Contexto
 {
     public class AppDbContext : DbContext
     {

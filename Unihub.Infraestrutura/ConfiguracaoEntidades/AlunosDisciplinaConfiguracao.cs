@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using unihub_api.Dominio.Entidades;
+using Unihub.Dominio.Entidades;
 
 namespace Unihub.Infraestrutura.ConfiguracaoEntidades
 {

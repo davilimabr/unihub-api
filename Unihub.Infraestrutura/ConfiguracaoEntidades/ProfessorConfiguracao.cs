@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using unihub_api.Dominio.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Unihub.Dominio.Entidades;
 
-namespace unihub_api.Infraestrutura.ConfiguracaoEntidades
+namespace Unihub.Infraestrutura.ConfiguracaoEntidades
 {
     public class ProfessorConfiguracao : IEntityTypeConfiguration<Professor>
     {
