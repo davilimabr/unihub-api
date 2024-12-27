@@ -1,9 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using unihub_api.Infraestrutura.Configuracao;
+using Unihub.Aplicacao.Interfaces;
+using Unihub.Aplicacao.Mapeamentos;
+using Unihub.Aplicacao.Servicos;
+using Unihub.Dominio.Interfaces;
+using Unihub.Infraestrutura.Contexto;
+using Unihub.Infraestrutura.Repositorio;
 
-namespace unihub_api.Ioc
+namespace Unihub.Ioc
 {
     public static class InjecaoDependencia
     {
@@ -16,10 +21,15 @@ namespace unihub_api.Ioc
                  b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
                  ));
 
-            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(GetClubHandler))));
+            services.AddAutoMapper(typeof(DtoParaDominioMapeamentos));
 
+            services.AddScoped<IAlunoRepositorio, AlunoRepositorio>();
+            services.AddScoped<IProfessorRepositorio, ProfessorRepositorio>();
+            services.AddScoped<IDisciplinaRepositorio, DisciplinaRepositorio>();
 
-            //services.AddAutoMapper(typeof(DomainToDtoMappingProfile));
+            services.AddScoped<IAlunoServico, AlunoServico>();
+            services.AddScoped<IProfessorServico, ProfessorServico>();
+            services.AddScoped<IDisciplinaServico, DisciplinaServico>();
 
             return services;
         }

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Unihub.Aplicacao\Unihub.Aplicacao.csproj" />
     <ProjectReference Include="..\Unihub.Ioc\Unihub.Ioc.csproj" />
   </ItemGroup>
 

@@ -9,5 +9,7 @@ namespace Unihub.Dominio.Interfaces
         Task<List<AlunoDto>> ObterTodosAsync();
         Task<AlunoDto?> AtualizarAsync(int id, AlunoAlteracaoDto dto);
         Task<bool> ExcluirAsync(int id);
+
+        Task<IEnumerable<DisciplinaDto>> ObterDisciplinasAsync(int alunoId);
     }
 }
