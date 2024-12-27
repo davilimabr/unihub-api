@@ -1,4 +1,5 @@
-using unihub_api.Ioc;
+using Unihub.Ioc;
+using Unihub.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuracao = builder.Configuration;
@@ -19,6 +20,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//app.UseErrorHandlingMiddleware();
 
 app.MapControllers();
 
