@@ -18,6 +18,10 @@ namespace Unihub.Infraestrutura.ConfiguracaoEntidades
                    .HasMaxLength(100)
                    .IsRequired();
 
+            builder.Property(x => x.Matricula)
+                   .HasMaxLength(20)
+                   .IsRequired();
+
             builder.Property(x => x.Senha)
                    .HasMaxLength(50)
                    .IsRequired();
