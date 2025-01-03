@@ -11,7 +11,7 @@ namespace Unihub.Aplicacao.Mapeamentos
             CreateMap<Aluno, AlunoDto>();
 
             CreateMap<AlunoAlteracaoDto, Aluno>()
-                .ConstructUsing(dto => new Aluno(dto.Nome, dto.Email, dto.Senha));
+                .ConstructUsing(dto => new Aluno(dto.Nome, dto.Email, dto.Matricula, dto.Senha));
 
             CreateMap<Professor, ProfessorDto>();
 
@@ -32,6 +32,25 @@ namespace Unihub.Aplicacao.Mapeamentos
             CreateMap<HorarioAula, HorarioAulaAlteracaoDto>();
             CreateMap<HorarioAulaAlteracaoDto, HorarioAula>()
                 .ConstructUsing(dto => new HorarioAula(dto.HoraInicio, dto.HoraTermino, dto.Dia));
+
+            CreateMap<Atividade, AtividadeDto>();
+            CreateMap<Atividade, AtividadeDetalhesDto>();
+
+            CreateMap<AtividadeAlteracaoDto, Atividade>()
+                .ConstructUsing(dto =>
+                    new Atividade(
+                        dto.AlunoId,
+                        dto.DisciplinaId,
+                        dto.NotaId,
+                        dto.Nome,
+                        dto.Descricao ?? string.Empty,
+                        dto.DataEntrega,
+                        dto.Status
+                    )
+                );
+
+            CreateMap<Nota, NotaDto>();
+            CreateMap<AlunosDisciplina, AlunosDisciplinaDto>();
         }
     }
 }

@@ -82,5 +82,31 @@ namespace Unihub.Controllers
             if (!excluido) return NotFound();
             return NoContent();
         }
+
+        [HttpGet("{id:int}/Aluno")]
+        public async Task<ActionResult<IEnumerable<AlunoDto>>> ObterAlunosInscritos(int id)
+        {
+            var alunos = await _servico.ObterAlunosInscritosAsync(id);
+            return Ok(alunos);
+        }
+
+        [HttpPost("{id:int}/Aluno")]
+        public async Task<ActionResult<IEnumerable<AlunosDisciplinaDto>>> ObterAlunosInscritos(int id, [FromBody] IEnumerable<int> idAlunos)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var alunosDisciplinas = await _servico.InscreverAlunoAsync(id, idAlunos);
+
+            return Ok(alunosDisciplinas);
+        }
+
+        [HttpDelete("{id:int}/Aluno")]
+        public async Task<IActionResult> DesinscreverAluno(int id, [FromBody] IEnumerable<int> idAlunos)
+        {
+            await _servico.DesinscreverAlunosAsync(id, idAlunos);
+            
+            return NoContent();
+        }
     }
 }

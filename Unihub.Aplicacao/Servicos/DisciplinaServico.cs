@@ -72,5 +72,22 @@ namespace Unihub.Aplicacao.Servicos
         {
             return await _repositorio.ExcluirHorarioAulaAsync(idHorarioAula);
         }
+        
+        public async Task<IEnumerable<AlunoDto>> ObterAlunosInscritosAsync(int idDisciplina)
+        {
+            var alunos = await _repositorio.ObterAlunosInscritosAsync(idDisciplina);
+            return _mapper.Map<IEnumerable<AlunoDto>>(alunos);
+        }
+
+        public async Task<IEnumerable<AlunosDisciplinaDto>> InscreverAlunoAsync(int idDisciplina, IEnumerable<int> idAluno)
+        {
+            var alunoDisciplina = await _repositorio.InscreverAlunoAsync(idDisciplina, idAluno);
+            return _mapper.Map<IEnumerable<AlunosDisciplinaDto>>(alunoDisciplina);
+        }
+
+        public async Task DesinscreverAlunosAsync(int idDisciplina, IEnumerable<int> idsAlunos)
+        {
+            await _repositorio.DesinscreverAlunosAsync(idDisciplina, idsAlunos);
+        }
     }
 }
