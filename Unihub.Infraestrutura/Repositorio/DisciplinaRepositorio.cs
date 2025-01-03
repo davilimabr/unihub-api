@@ -95,5 +95,48 @@ namespace Unihub.Infraestrutura.Repositorio
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Aluno>> ObterAlunosInscritosAsync(int idDisciplina)
+        {
+            return await _context.AlunosDisciplina
+                .Where(x => x.DisciplinaId == idDisciplina)
+                .Select(x => x.Aluno)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<AlunosDisciplina>> InscreverAlunoAsync(int idDisciplina, IEnumerable<int> idsAlunos)
+        {
+            var alunosDisciplinas = new List<AlunosDisciplina>();
+
+            foreach(var idAluno in idsAlunos)
+            {
+                var relacionamentoExistente = await _context.AlunosDisciplina.AnyAsync(x => x.AlunoId == idAluno);
+                var alunoExistente = await _context.Aluno.AnyAsync(x => x.Id == idAluno);
+
+                if (!relacionamentoExistente && alunoExistente)
+                {
+                    var alunoDisciplina = new AlunosDisciplina(idAluno, idDisciplina);
+                    _context.AlunosDisciplina.Add(alunoDisciplina);
+                    await _context.SaveChangesAsync();
+                    alunosDisciplinas.Add(alunoDisciplina);
+                }
+            }
+
+            return alunosDisciplinas;
+        }
+
+        public async Task DesinscreverAlunosAsync(int idDisciplina, IEnumerable<int> idsAlunos)
+        {
+            foreach (var idAluno in idsAlunos)
+            {
+                var alunoDisciplina = await _context.AlunosDisciplina.Where(x => x.DisciplinaId == idDisciplina && x.AlunoId == idAluno).FirstOrDefaultAsync();
+                
+                if (alunoDisciplina is null)
+                    return;
+                
+                _context.AlunosDisciplina.Remove(alunoDisciplina!);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

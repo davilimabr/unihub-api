@@ -12,5 +12,8 @@ namespace Unihub.Dominio.Interfaces
         Task<IEnumerable<HorarioAula>> ObterHorariosAulas(int idDisciplina);
         Task<HorarioAula> CriarHorarioAulaAsync(int idDisciplina, HorarioAula horarioAula);
         Task<bool> ExcluirHorarioAulaAsync(int idHorarioAula);
+        Task<IEnumerable<Aluno>> ObterAlunosInscritosAsync(int idDisciplina);
+        Task<IEnumerable<AlunosDisciplina>> InscreverAlunoAsync(int idDisciplina, IEnumerable<int> idAluno);
+        Task DesinscreverAlunosAsync(int idDisciplina, IEnumerable<int> idsAlunos);
     }
 }
