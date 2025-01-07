@@ -16,11 +16,26 @@ namespace Unihub.Aplicacao.Servicos
             _mapper = mapper;
         }
 
-        public async Task<AlunoDto> CriarAsync(AlunoAlteracaoDto dto)
+        public async Task<bool> CadastrarAsync(AlunoAlteracaoDto dto)
         {
+            var alunos = await _alunoRepositorio.ObterAsync(aluno => aluno.Matricula == dto.Matricula);
+
+            if (alunos.Any())
+                throw new Exception("Aluno já cadastrado.");
+
             var entidade = _mapper.Map<Aluno>(dto);
-            await _alunoRepositorio.CriarAsync(entidade);
-            return _mapper.Map<AlunoDto>(entidade);
+            var alunoCadastrado = await _alunoRepositorio.CriarAsync(entidade);
+            return alunoCadastrado is not null;
+        }
+
+        public async Task<bool> LogarAsync(LoginDto dto)
+        {
+            var aluno = (await _alunoRepositorio.ObterAsync(aluno => aluno.Matricula == dto.Matricula)).FirstOrDefault();
+
+            if (aluno is null)
+                throw new Exception("Não existe nenhum aluno cadastrado com a matricula informada.");
+
+            return aluno.Senha == dto.Senha;
         }
 
         public async Task<AlunoDto?> ObterPorIdAsync(int id)

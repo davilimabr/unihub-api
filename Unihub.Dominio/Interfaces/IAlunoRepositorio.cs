@@ -5,6 +5,7 @@ namespace Unihub.Dominio.Interfaces
     public interface IAlunoRepositorio
     {
         Task<Aluno> CriarAsync(Aluno aluno);
+        Task<IEnumerable<Aluno>> ObterAsync(Func<Aluno, bool> condicao);
         Task<Aluno?> ObterPorIdAsync(int id);
         Task<IEnumerable<Aluno>> ObterTodosAsync();
         Task<Aluno?> AtualizarAsync(Aluno aluno);
