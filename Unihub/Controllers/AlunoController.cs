@@ -15,15 +15,6 @@ namespace Unihub.Controllers
             _alunoServico = alunoServico;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AlunoDto>> CriarAluno([FromBody] AlunoAlteracaoDto dto)
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var resultado = await _alunoServico.CriarAsync(dto);
-            return CreatedAtAction(nameof(ObterAlunoPorId), new { id = resultado.Id }, resultado);
-        }
-
         [HttpGet("{id:int}")]
         public async Task<ActionResult<AlunoDto>> ObterAlunoPorId(int id)
         {

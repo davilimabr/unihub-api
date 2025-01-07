@@ -20,6 +20,12 @@ namespace Unihub.Infraestrutura.Repositorio
             await _context.SaveChangesAsync();
             return aluno;
         }
+        public async Task<IEnumerable<Aluno>> ObterAsync(Func<Aluno, bool> condicao)
+        {
+            return await Task.FromResult(
+                _context.Aluno.Where(condicao).ToList()
+                );
+        }
 
         public async Task<Aluno?> ObterPorIdAsync(int id)
         {
@@ -82,10 +88,11 @@ namespace Unihub.Infraestrutura.Repositorio
         /// </summary>
         public async Task<IEnumerable<Atividade>> ObterAtividadesAsync(int alunoId)
         {
-            // A entidade Atividade tem a prop AlunoId:
             return await _context.Atividade
                 .Where(a => a.AlunoId == alunoId)
                 .ToListAsync();
         }
+
+        
     }
 }
