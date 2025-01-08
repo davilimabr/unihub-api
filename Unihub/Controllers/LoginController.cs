@@ -24,7 +24,7 @@ namespace Unihub.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<bool>> Logar([FromBody] LoginDto dto)
+        public async Task<ActionResult<LoginRetornoDto>> Logar([FromBody] LoginDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 

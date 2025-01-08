@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Unihub.Aplicacao.DTOs;
+using Unihub.Dominio.Comum.Excecoes;
 using Unihub.Dominio.Entidades;
 using Unihub.Dominio.Interfaces;
 
@@ -28,14 +29,19 @@ namespace Unihub.Aplicacao.Servicos
             return alunoCadastrado is not null;
         }
 
-        public async Task<bool> LogarAsync(LoginDto dto)
+        public async Task<LoginRetornoDto> LogarAsync(LoginDto dto)
         {
             var aluno = (await _alunoRepositorio.ObterAsync(aluno => aluno.Matricula == dto.Matricula)).FirstOrDefault();
 
             if (aluno is null)
-                throw new Exception("Não existe nenhum aluno cadastrado com a matricula informada.");
+                throw new RecursoNaoEncontradoException("Não existe nenhum aluno cadastrado com a matricula informada.");
 
-            return aluno.Senha == dto.Senha;
+            var retorno = new LoginRetornoDto(aluno.Senha == dto.Senha);
+
+            if (retorno.CredenciaisValidas)
+                retorno.Aluno = _mapper.Map<AlunoDto>(aluno);
+
+            return retorno;
         }
 
         public async Task<AlunoDto?> ObterPorIdAsync(int id)

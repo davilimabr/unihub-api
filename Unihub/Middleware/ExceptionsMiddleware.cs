@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Unihub.Dominio.Comum.Excecoes;
 
 namespace Unihub.Middleware
 {
@@ -31,12 +32,17 @@ namespace Unihub.Middleware
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             string message = "Ocorreu um erro interno no servidor.";
 
-            if (exception is ArgumentException argEx)
+            switch (exception)
             {
-                statusCode = HttpStatusCode.BadRequest;
-                message = argEx.Message; 
-            }
+                case ArgumentException: statusCode = HttpStatusCode.InternalServerError;
+                    message = exception.Message;
+                    break;
 
+                case RecursoNaoEncontradoException: statusCode = HttpStatusCode.NotFound;
+                    message = exception.Message;
+                    break;
+            }
+            
             context.Response.StatusCode = (int)statusCode;
 
             var result = JsonSerializer.Serialize(new { Erro = message });
