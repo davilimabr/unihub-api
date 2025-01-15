@@ -13,15 +13,10 @@ namespace Unihub.Aplicacao.Mapeamentos
             CreateMap<AlunoAlteracaoDto, Aluno>()
                 .ConstructUsing(dto => new Aluno(dto.Nome, dto.Email, dto.Matricula, dto.Senha));
 
-            CreateMap<Professor, ProfessorDto>();
-
-            CreateMap<ProfessorAlteracaoDto, Professor>()
-                .ConstructUsing(dto => new Professor(dto.Nome, dto.Email));
-
             CreateMap<Disciplina, DisciplinaDto>();
 
             CreateMap<DisciplinaAlteracaoDto, Disciplina>()
-                .ConstructUsing(dto => new Disciplina(dto.ProfessorId, dto.Nome, dto.Codigo, dto.Descricao, dto.Sala, dto.TotalHoras));
+                .ConstructUsing(dto => new Disciplina(dto.Professor, dto.Nome, dto.Codigo, dto.Descricao, dto.Sala, dto.TotalHoras));
 
             CreateMap<Disciplina, DisciplinaDto>();
             CreateMap<Disciplina, DisciplinaDetalheDto>();

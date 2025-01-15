@@ -14,7 +14,6 @@ namespace Unihub.Infraestrutura.Contexto
         public DbSet<Falta> Falta { get; set; }
         public DbSet<HorarioAula> HorarioAula { get; set; }
         public DbSet<Nota> Nota { get; set; }
-        public DbSet<Professor> Professor { get; set; }
         public DbSet<AulasNaSemana> AulasNaSemana { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
