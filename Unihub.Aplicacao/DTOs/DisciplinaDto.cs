@@ -9,5 +9,8 @@
         public string Sala { get; set; }
         public int TotalHoras { get; set; }
         public string Professor { get; set; }
+        public int Periodo { get; set; }
+        public bool Obrigatoria { get; set; }
+        public IEnumerable<FaltaDto> Faltas { get; set; }
     }
 }

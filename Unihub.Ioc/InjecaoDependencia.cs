@@ -26,6 +26,8 @@ namespace Unihub.Ioc
             services.AddScoped<IAlunoRepositorio, AlunoRepositorio>();
             services.AddScoped<IDisciplinaRepositorio, DisciplinaRepositorio>();
             services.AddScoped<IAtividadeRepositorio, AtividadeRepositorio>();
+            services.AddScoped<IFaltaRepositorio, FaltaRepositorio>();
+
 
             services.AddScoped<IAlunoServico, AlunoServico>();
             services.AddScoped<IDisciplinaServico, DisciplinaServico>();

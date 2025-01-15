@@ -9,6 +9,7 @@
         public string Sala { get; set; }
         public int TotalHoras { get; set; }
         public string Professor { get; set; }
-        //Adicionar outras informações conforme for seguindo a implementação, exemplo, lista de atividades, aulas na semana e etc
+        public int Periodo { get; set; }
+        public bool Obrigatoria { get; set; }
     }
 }

@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public DateTime Data { get; set; }
         public string Motivo { get; set; }
+        public string Horas { get; set; }
     }
 }

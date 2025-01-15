@@ -1,7 +1,4 @@
-﻿//mudar campo hora falta
-//adicionar crud falta
-//adicionar campos disciplina
-//adicionar carga no banco
+﻿//adicionar crud falta
 //Mensagem que o Guilherme mandou no zap
 
 namespace Unihub.Dominio.Entidades
@@ -13,14 +10,11 @@ namespace Unihub.Dominio.Entidades
         public string Nome { get; private set; }
         public string Codigo { get; private set; }
         public string Descricao { get; private set; }
-        public int HorasFalta { get; private set; }
         public string Sala { get; private set; }
-        public string Periodo { get; private set; }
-        public string Obrigatoria { get; private set; }
-
+        public int Periodo { get; private set; }
+        public bool Obrigatoria { get; private set; }
         public int TotalHoras { get; private set; }
 
-        public ICollection<AulasNaSemana> AulasNaSemanas { get; set; }
         public ICollection<Atividade> Atividades { get; set; }
         public ICollection<AlunosDisciplina> AlunosDisciplinas { get; set; }
         public ICollection<Falta> Faltas { get; set; }
@@ -31,10 +25,12 @@ namespace Unihub.Dominio.Entidades
             string codigo,
             string descricao,
             string sala,
-            int totalHoras)
+            int totalHoras,
+            int periodo,
+            bool obrigatoria)
         {
-            Validar(professor, nome, codigo, descricao, sala, totalHoras);
-            Atualizar(professor, nome, codigo, descricao, sala, totalHoras);
+            Validar(professor, nome, codigo, descricao, sala, totalHoras, periodo, obrigatoria);
+            Atualizar(professor, nome, codigo, descricao, sala, totalHoras, periodo, obrigatoria);
         }
 
         public Disciplina(
@@ -44,15 +40,17 @@ namespace Unihub.Dominio.Entidades
             string codigo,
             string descricao,
             string sala,
-            int totalHoras)
+            int totalHoras,
+            int periodo,
+            bool obrigatoria)
         {
             if (id <= 0)
                 throw new ArgumentException("O ID da disciplina deve ser maior que zero.", nameof(id));
 
             Id = id;
 
-            Validar(professor, nome, codigo, descricao, sala, totalHoras);
-            Atualizar(professor, nome, codigo, descricao, sala, totalHoras);
+            Validar(professor, nome, codigo, descricao, sala, totalHoras, periodo, obrigatoria);
+            Atualizar(professor, nome, codigo, descricao, sala, totalHoras, periodo, obrigatoria);
         }
 
         private void Validar(
@@ -61,7 +59,9 @@ namespace Unihub.Dominio.Entidades
             string codigo,
             string descricao,
             string sala,
-            int totalHoras)
+            int totalHoras,
+            int periodo,
+            bool obrigatoria)
         {
             if (string.IsNullOrWhiteSpace(professor))
                 throw new ArgumentException("O nome do professor não pode ser vazio ou nulo.", nameof(professor));
@@ -88,7 +88,9 @@ namespace Unihub.Dominio.Entidades
             string codigo,
             string descricao,
             string sala,
-            int totalHoras)
+            int totalHoras,
+            int periodo,
+            bool obrigatoria)
         {
             Professor = professor;
             Nome = nome;
@@ -96,6 +98,8 @@ namespace Unihub.Dominio.Entidades
             Descricao = descricao;
             Sala = sala;
             TotalHoras = totalHoras;
+            Periodo = periodo;
+            Obrigatoria = obrigatoria;
         }
     }
 }

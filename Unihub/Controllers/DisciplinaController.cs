@@ -59,30 +59,6 @@ namespace Unihub.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id:int}/horario")]
-        public async Task<ActionResult<IEnumerable<DisciplinaDto>>> ObterHorariosAula(int id)
-        {
-            var disciplinas = await _servico.ObterHorariosAulasAsync(id);
-            return Ok(disciplinas);
-        }
-
-        [HttpPost("{id:int}/horario")]
-        public async Task<ActionResult<HorarioAulaAlteracaoDto>> CriarHorarioAula(int id, [FromBody] HorarioAulaAlteracaoDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return await _servico.CriarHorarioAulaAsync(id, dto);
-        }
-
-        [HttpDelete("/Horario/{id:int}")]
-        public async Task<IActionResult> ExcluirHorarioAula(int id)
-        {
-            var excluido = await _servico.ExcluirHorariosAulaAsync(id);
-            if (!excluido) return NotFound();
-            return NoContent();
-        }
-
         [HttpGet("{id:int}/Aluno")]
         public async Task<ActionResult<IEnumerable<AlunoDto>>> ObterAlunosInscritos(int id)
         {
@@ -107,6 +83,20 @@ namespace Unihub.Controllers
             await _servico.DesinscreverAlunosAsync(id, idAlunos);
             
             return NoContent();
+        }
+
+        [HttpPost("{idDiscioplina:int}/Aluno/{idAluno:int}/Falta")]
+        public async Task<ActionResult<FaltaDto>> RegistrarFalta(int idDiscioplina, int idAluno, [FromBody] FaltaAlteracaoDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            dto.AlunoId = idAluno;
+            dto.DisciplinaId = idDiscioplina;
+
+            var falta = await _servico.RegistrarFalta(idDiscioplina, dto);
+
+            return Ok(falta);
         }
     }
 }

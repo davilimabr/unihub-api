@@ -16,17 +16,14 @@ namespace Unihub.Aplicacao.Mapeamentos
             CreateMap<Disciplina, DisciplinaDto>();
 
             CreateMap<DisciplinaAlteracaoDto, Disciplina>()
-                .ConstructUsing(dto => new Disciplina(dto.Professor, dto.Nome, dto.Codigo, dto.Descricao, dto.Sala, dto.TotalHoras));
+                .ConstructUsing(dto => new Disciplina(dto.Professor, dto.Nome, dto.Codigo, dto.Descricao, dto.Sala, dto.TotalHoras, dto.Periodo, dto.Obrigatoria));
 
             CreateMap<Disciplina, DisciplinaDto>();
             CreateMap<Disciplina, DisciplinaDetalheDto>();
 
             CreateMap<Falta, FaltaDto>();
+            CreateMap<FaltaAlteracaoDto, Falta>();
 
-            CreateMap<HorarioAula, HorarioAulaDto>();
-            CreateMap<HorarioAula, HorarioAulaAlteracaoDto>();
-            CreateMap<HorarioAulaAlteracaoDto, HorarioAula>()
-                .ConstructUsing(dto => new HorarioAula(dto.HoraInicio, dto.HoraTermino, dto.Dia));
 
             CreateMap<Atividade, AtividadeDto>();
             CreateMap<Atividade, AtividadeDetalhesDto>();

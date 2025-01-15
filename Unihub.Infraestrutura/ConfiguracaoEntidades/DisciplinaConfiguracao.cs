@@ -27,6 +27,12 @@ namespace Unihub.Infraestrutura.ConfiguracaoEntidades
 
             builder.Property(d => d.TotalHoras)
                 .IsRequired();
+
+            builder.Property(d => d.Periodo)
+                .IsRequired();
+
+            builder.Property(d => d.Obrigatoria)
+                .IsRequired();
         }
     }
 }

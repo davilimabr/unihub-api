@@ -26,11 +26,6 @@ namespace Unihub.Infraestrutura.ConfiguracaoEntidades
                    .WithMany(x => x.Faltas)
                    .HasForeignKey(x => x.DisciplinaId)
                    .HasPrincipalKey(x => x.Id);
-
-            builder.HasOne(x => x.HorarioAula)
-                  .WithMany(x => x.Faltas)
-                  .HasForeignKey(x => x.HorarioAulaId)
-                  .HasPrincipalKey(x => x.Id);
         }
     }
 }
