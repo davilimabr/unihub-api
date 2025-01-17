@@ -30,7 +30,7 @@ namespace Unihub.Infraestrutura.Repositorio
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<Atividade>> ObterTodasAsync()
+        public async Task<IEnumerable<Atividade>> ObterTodasAsync()
         {
             return await _context.Set<Atividade>().ToListAsync();
         }
@@ -55,6 +55,16 @@ namespace Unihub.Infraestrutura.Repositorio
             _context.Set<Atividade>().Remove(atividade);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<Atividade>> ObterPorAluno(int idAluno)
+        {
+            return await _context.Atividade
+                .Include(a => a.Aluno)
+                .Include(a => a.Disciplina)
+                .Include(a => a.Nota)
+                .Where(a => a.Aluno.Id == idAluno)
+                .ToListAsync();
         }
     }
 }

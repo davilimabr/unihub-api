@@ -9,5 +9,6 @@ namespace Unihub.Aplicacao.Interfaces
         Task<List<AtividadeDto>> ObterTodasAsync();
         Task<AtividadeDto?> AtualizarAsync(int id, AtividadeAlteracaoDto dto);
         Task<bool> ExcluirAsync(int id);
+        Task<IEnumerable<AtividadeDetalhesDto>> ObterPorAluno(int idAluno);
     }
 }
