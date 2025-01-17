@@ -53,5 +53,11 @@ namespace Unihub.Aplicacao.Servicos
         {
             return await _repositorio.ExcluirAsync(id);
         }
+
+        public async Task<IEnumerable<AtividadeDetalhesDto>> ObterPorAluno(int idAluno)
+        {
+            var atividades = await _repositorio.ObterPorAluno(idAluno);
+            return _mapper.Map<IEnumerable<AtividadeDetalhesDto>>(atividades);
+        }
     }
 }

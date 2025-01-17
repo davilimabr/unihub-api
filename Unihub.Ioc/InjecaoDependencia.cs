@@ -24,12 +24,12 @@ namespace Unihub.Ioc
             services.AddAutoMapper(typeof(DtoParaDominioMapeamentos));
 
             services.AddScoped<IAlunoRepositorio, AlunoRepositorio>();
-            services.AddScoped<IProfessorRepositorio, ProfessorRepositorio>();
             services.AddScoped<IDisciplinaRepositorio, DisciplinaRepositorio>();
             services.AddScoped<IAtividadeRepositorio, AtividadeRepositorio>();
+            services.AddScoped<IFaltaRepositorio, FaltaRepositorio>();
+
 
             services.AddScoped<IAlunoServico, AlunoServico>();
-            services.AddScoped<IProfessorServico, ProfessorServico>();
             services.AddScoped<IDisciplinaServico, DisciplinaServico>();
             services.AddScoped<IAtividadeServico, AtividadeServico>();
 

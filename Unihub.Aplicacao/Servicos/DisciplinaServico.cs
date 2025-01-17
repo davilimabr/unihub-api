@@ -9,12 +9,14 @@ namespace Unihub.Aplicacao.Servicos
     public class DisciplinaServico : IDisciplinaServico
     {
         private readonly IDisciplinaRepositorio _repositorio;
+        private readonly IFaltaRepositorio _repositorioFalta;
         private readonly IMapper _mapper;
 
-        public DisciplinaServico(IDisciplinaRepositorio repositorio, IMapper mapper)
+        public DisciplinaServico(IDisciplinaRepositorio repositorio, IFaltaRepositorio faltaRepositorio, IMapper mapper)
         {
             _repositorio = repositorio;
             _mapper = mapper;
+            _repositorioFalta = faltaRepositorio;
         }
 
         public async Task<DisciplinaDto> CriarAsync(DisciplinaAlteracaoDto dto)
@@ -31,7 +33,7 @@ namespace Unihub.Aplicacao.Servicos
             return _mapper.Map<DisciplinaDetalheDto>(disciplina);
         }
 
-        public async Task<List<DisciplinaDto>> ObterTodasAsync()
+        public async Task<IEnumerable<DisciplinaDto>> ObterTodasAsync()
         {
             var disciplinas = await _repositorio.ObterTodasAsync();
             return _mapper.Map<List<DisciplinaDto>>(disciplinas);
@@ -54,25 +56,6 @@ namespace Unihub.Aplicacao.Servicos
             return await _repositorio.ExcluirAsync(id);
         }
 
-        public async Task<IEnumerable<HorarioAulaDto>> ObterHorariosAulasAsync(int idDisciplina)
-        {
-            var horarioAulas = await _repositorio.ObterHorariosAulas(idDisciplina);
-            if (horarioAulas == null) return null;
-            return _mapper.Map<IEnumerable<HorarioAulaDto>>(horarioAulas);
-        }
-
-        public async Task<HorarioAulaAlteracaoDto> CriarHorarioAulaAsync(int idDisciplina, HorarioAulaAlteracaoDto horarioAula)
-        {
-            var entidade = _mapper.Map<HorarioAula>(horarioAula);
-            var horarioAulaCriada = await _repositorio.CriarHorarioAulaAsync(idDisciplina, entidade);
-            return _mapper.Map<HorarioAulaAlteracaoDto>(horarioAulaCriada);
-        }
-
-        public async Task<bool> ExcluirHorariosAulaAsync(int idHorarioAula)
-        {
-            return await _repositorio.ExcluirHorarioAulaAsync(idHorarioAula);
-        }
-        
         public async Task<IEnumerable<AlunoDto>> ObterAlunosInscritosAsync(int idDisciplina)
         {
             var alunos = await _repositorio.ObterAlunosInscritosAsync(idDisciplina);
@@ -88,6 +71,19 @@ namespace Unihub.Aplicacao.Servicos
         public async Task DesinscreverAlunosAsync(int idDisciplina, IEnumerable<int> idsAlunos)
         {
             await _repositorio.DesinscreverAlunosAsync(idDisciplina, idsAlunos);
+        }
+
+        public async Task<IEnumerable<DisciplinaDto>> ObterPorAluno(int idAluno)
+        {
+            var disciplinas = await _repositorio.ObterPorAluno(idAluno);
+            return _mapper.Map<IEnumerable<DisciplinaDto>>(disciplinas);
+        }
+
+        public async Task<FaltaDto> RegistrarFalta(int idDisciplina, FaltaAlteracaoDto falta)
+        {
+            var entidade = _mapper.Map<Falta>(falta);
+            var faltaCriada = await _repositorioFalta.RegistrarFalta(entidade);
+            return _mapper.Map<FaltaDto>(faltaCriada);
         }
     }
 }

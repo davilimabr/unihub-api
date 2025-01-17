@@ -39,6 +39,14 @@ namespace Unihub.Controllers
             return Ok(atividades);
         }
 
+        [HttpGet]
+        [Route("Aluno")]
+        public async Task<ActionResult<IEnumerable<AtividadeDetalhesDto>>> ObterPorAluno([FromQuery] int id)
+        {
+            var atividades = await _servico.ObterPorAluno(id);
+            return Ok(atividades);
+        }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult<AtividadeDto>> Atualizar(int id, [FromBody] AtividadeAlteracaoDto dto)
         {

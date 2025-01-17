@@ -24,8 +24,6 @@ namespace Unihub.Infraestrutura.Repositorio
         public async Task<Disciplina?> ObterPorIdAsync(int id)
         {
             return await _context.Disciplina
-                .Include(d => d.Professor)
-                .Include(d => d.AulasNaSemanas)
                 .Include(d => d.Atividades)
                 .Include(d => d.AlunosDisciplinas)
                 .Include(d => d.Faltas)
@@ -35,8 +33,6 @@ namespace Unihub.Infraestrutura.Repositorio
         public async Task<IEnumerable<Disciplina>> ObterTodasAsync()
         {
             return await _context.Disciplina
-                .Include(d => d.Professor)
-                .Include(d => d.AulasNaSemanas)
                 .Include(d => d.Atividades)
                 .Include(d => d.AlunosDisciplinas)
                 .Include(d => d.Faltas)
@@ -61,37 +57,6 @@ namespace Unihub.Infraestrutura.Repositorio
                 return false;
 
             _context.Disciplina.Remove(disciplina);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<IEnumerable<HorarioAula>> ObterHorariosAulas(int idDisciplina)
-        {
-            return await _context.HorarioAula
-                .Include(x => x.AulasNaSemanas.Where(x => x.DisciplinaId == idDisciplina))
-                .ToListAsync();
-        }
-
-        public async Task<HorarioAula> CriarHorarioAulaAsync(int idDisciplina, HorarioAula horarioAula)
-        {
-            _context.HorarioAula.Add(horarioAula);
-            await _context.SaveChangesAsync();
-
-            var aulaNaSemana = new AulasNaSemana(idDisciplina, horarioAula.Id);
-            _context.AulasNaSemana.Add(aulaNaSemana);
-
-            await _context.SaveChangesAsync();
-
-            return horarioAula;
-        }
-
-        public async Task<bool> ExcluirHorarioAulaAsync(int idHorarioAula)
-        {
-            var horarioAula = await _context.HorarioAula.FindAsync(idHorarioAula);
-            if (horarioAula == null)
-                return false;
-
-            _context.HorarioAula.Remove(horarioAula);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -137,6 +102,16 @@ namespace Unihub.Infraestrutura.Repositorio
                 _context.AlunosDisciplina.Remove(alunoDisciplina!);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Disciplina>> ObterPorAluno(int idAluno)
+        {
+            return await _context.Disciplina
+                .Include(d => d.Professor)
+                .Include(d => d.Atividades)
+                .Include(d => d.AlunosDisciplinas.Where(a => a.AlunoId == idAluno))
+                .Include(d => d.Faltas)
+                .ToListAsync();
         }
     }
 }

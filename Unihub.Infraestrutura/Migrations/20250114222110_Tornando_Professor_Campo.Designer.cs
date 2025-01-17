@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unihub.Infraestrutura.Contexto;
 
@@ -11,9 +12,11 @@ using Unihub.Infraestrutura.Contexto;
 namespace Unihub.Infraestrutura.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114222110_Tornando_Professor_Campo")]
+    partial class Tornando_Professor_Campo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +128,29 @@ namespace Unihub.Infraestrutura.Migrations
                     b.ToTable("Atividade");
                 });
 
+            modelBuilder.Entity("Unihub.Dominio.Entidades.AulasNaSemana", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DisciplinaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorarioAulaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplinaId");
+
+                    b.HasIndex("HorarioAulaId");
+
+                    b.ToTable("AulasNaSemana");
+                });
+
             modelBuilder.Entity("Unihub.Dominio.Entidades.Disciplina", b =>
                 {
                     b.Property<int>("Id")
@@ -147,12 +173,6 @@ namespace Unihub.Infraestrutura.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("Obrigatoria")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int>("Periodo")
-                        .HasColumnType("int");
 
                     b.Property<string>("Professor")
                         .IsRequired()
@@ -188,7 +208,7 @@ namespace Unihub.Infraestrutura.Migrations
                     b.Property<int>("DisciplinaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Horas")
+                    b.Property<int>("HorarioAulaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Motivo")
@@ -202,7 +222,31 @@ namespace Unihub.Infraestrutura.Migrations
 
                     b.HasIndex("DisciplinaId");
 
+                    b.HasIndex("HorarioAulaId");
+
                     b.ToTable("Falta");
+                });
+
+            modelBuilder.Entity("Unihub.Dominio.Entidades.HorarioAula", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Dia")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HoraInicio")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HoraTermino")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HorarioAula");
                 });
 
             modelBuilder.Entity("Unihub.Dominio.Entidades.Nota", b =>
@@ -271,6 +315,25 @@ namespace Unihub.Infraestrutura.Migrations
                     b.Navigation("Nota");
                 });
 
+            modelBuilder.Entity("Unihub.Dominio.Entidades.AulasNaSemana", b =>
+                {
+                    b.HasOne("Unihub.Dominio.Entidades.Disciplina", "Disciplina")
+                        .WithMany("AulasNaSemanas")
+                        .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Unihub.Dominio.Entidades.HorarioAula", "HorarioAula")
+                        .WithMany("AulasNaSemanas")
+                        .HasForeignKey("HorarioAulaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Disciplina");
+
+                    b.Navigation("HorarioAula");
+                });
+
             modelBuilder.Entity("Unihub.Dominio.Entidades.Falta", b =>
                 {
                     b.HasOne("Unihub.Dominio.Entidades.Aluno", "Aluno")
@@ -285,9 +348,17 @@ namespace Unihub.Infraestrutura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Unihub.Dominio.Entidades.HorarioAula", "HorarioAula")
+                        .WithMany("Faltas")
+                        .HasForeignKey("HorarioAulaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Aluno");
 
                     b.Navigation("Disciplina");
+
+                    b.Navigation("HorarioAula");
                 });
 
             modelBuilder.Entity("Unihub.Dominio.Entidades.Aluno", b =>
@@ -304,6 +375,15 @@ namespace Unihub.Infraestrutura.Migrations
                     b.Navigation("AlunosDisciplinas");
 
                     b.Navigation("Atividades");
+
+                    b.Navigation("AulasNaSemanas");
+
+                    b.Navigation("Faltas");
+                });
+
+            modelBuilder.Entity("Unihub.Dominio.Entidades.HorarioAula", b =>
+                {
+                    b.Navigation("AulasNaSemanas");
 
                     b.Navigation("Faltas");
                 });

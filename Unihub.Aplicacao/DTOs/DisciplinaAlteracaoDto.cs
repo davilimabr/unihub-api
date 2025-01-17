@@ -7,6 +7,8 @@
         public string Descricao { get; set; }
         public string Sala { get; set; }
         public int TotalHoras { get; set; }
-        public int ProfessorId { get; set; }
+        public string Professor { get; set; }
+        public int Periodo { get; set; }
+        public bool Obrigatoria { get; set; }
     }
 }

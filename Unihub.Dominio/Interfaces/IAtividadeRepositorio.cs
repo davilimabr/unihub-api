@@ -6,8 +6,9 @@ namespace Unihub.Dominio.Interfaces
     {
         Task<Atividade> CriarAsync(Atividade atividade);
         Task<Atividade?> ObterPorIdAsync(int id);
-        Task<List<Atividade>> ObterTodasAsync();
+        Task<IEnumerable<Atividade>> ObterTodasAsync();
         Task<Atividade?> AtualizarAsync(Atividade atividade);
         Task<bool> ExcluirAsync(int id);
+        Task<IEnumerable<Atividade>> ObterPorAluno(int idAluno);
     }
 }
