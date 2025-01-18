@@ -13,5 +13,7 @@ namespace Unihub.Dominio.Interfaces
         Task<IEnumerable<Disciplina>> ObterDisciplinasAsync(int id);
         Task<IEnumerable<Falta>> ObterFaltasAsync(int id);
         Task<IEnumerable<Atividade>> ObterAtividadesAsync(int id);
+        Task<IEnumerable<AlunosDisciplina>> AdicionarDisciplinas(int idAluno, IEnumerable<int> idDisciplina);
+
     }
 }

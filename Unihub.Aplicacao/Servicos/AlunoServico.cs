@@ -80,5 +80,11 @@ namespace Unihub.Aplicacao.Servicos
             var disciplinas = await _alunoRepositorio.ObterDisciplinasAsync(alunoId);
             return _mapper.Map<IEnumerable<DisciplinaDto>>(disciplinas);
         }
+
+        public async Task<IEnumerable<AlunosDisciplinaDto>> AdicionarDisciplinas(int idAluno, IEnumerable<int> idDisciplina)
+        {
+            var alunosDisciplina = await _alunoRepositorio.AdicionarDisciplinas(idAluno, idDisciplina);
+            return _mapper.Map<IEnumerable<AlunosDisciplinaDto>>(alunosDisciplina);
+        }
     }
 }

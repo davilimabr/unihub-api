@@ -50,5 +50,16 @@ namespace Unihub.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id:int}/Disciplina")]
+        public async Task<ActionResult<IEnumerable<AlunosDisciplinaDto>>> AdicionarDisciplinas(int id, [FromBody] IEnumerable<int> idsDisciplina)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var alunosDisciplinas = await _alunoServico.AdicionarDisciplinas(id, idsDisciplina);
+
+            return Ok(alunosDisciplinas);
+        }
     }
 }

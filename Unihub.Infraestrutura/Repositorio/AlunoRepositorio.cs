@@ -93,6 +93,29 @@ namespace Unihub.Infraestrutura.Repositorio
                 .ToListAsync();
         }
 
-        
+        public async Task<IEnumerable<AlunosDisciplina>> AdicionarDisciplinas(int idAluno, IEnumerable<int> idsDisciplina)
+        {
+            var alunosDisciplinas = new List<AlunosDisciplina>();
+
+            var alunoExistente = await _context.Aluno.AnyAsync(x => x.Id == idAluno);
+            if (!alunoExistente)
+                return alunosDisciplinas;
+
+            foreach (var idDisciplina in idsDisciplina)
+            {
+                var relacionamentoExistente = await _context.AlunosDisciplina.AnyAsync(x => x.DisciplinaId == idDisciplina);
+                var disciplinaExistente = await _context.Disciplina.AnyAsync(x => x.Id == idDisciplina);
+
+                if (!relacionamentoExistente && disciplinaExistente)
+                {
+                    var alunoDisciplina = new AlunosDisciplina(idAluno, idDisciplina);
+                    _context.AlunosDisciplina.Add(alunoDisciplina);
+                    await _context.SaveChangesAsync();
+                    alunosDisciplinas.Add(alunoDisciplina);
+                }
+            }
+
+            return alunosDisciplinas;
+        }
     }
 }
