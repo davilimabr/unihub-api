@@ -83,9 +83,7 @@ namespace Unihub.Infraestrutura.Repositorio
             //    .ToListAsync();
         }
 
-        /// <summary>
-        /// Retorna todas as atividades que o Aluno (id=alunoId) possui.
-        /// </summary>
+        
         public async Task<IEnumerable<Atividade>> ObterAtividadesAsync(int alunoId)
         {
             return await _context.Atividade
@@ -116,6 +114,20 @@ namespace Unihub.Infraestrutura.Repositorio
             }
 
             return alunosDisciplinas;
+        }
+
+        public async Task RemoverDisciplinasAsync(int idAluno, IEnumerable<int> idsDisciplinas)
+        {
+            foreach (var idDisciplina in idsDisciplinas)
+            {
+                var alunoDisciplina = await _context.AlunosDisciplina.Where(x => x.DisciplinaId == idDisciplina && x.AlunoId == idAluno).FirstOrDefaultAsync();
+
+                if (alunoDisciplina is null)
+                    return;
+
+                _context.AlunosDisciplina.Remove(alunoDisciplina!);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

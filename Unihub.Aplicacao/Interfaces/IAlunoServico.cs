@@ -1,5 +1,4 @@
 ﻿using Unihub.Aplicacao.DTOs;
-using Unihub.Dominio.Entidades;
 
 namespace Unihub.Dominio.Interfaces
 {
@@ -13,5 +12,6 @@ namespace Unihub.Dominio.Interfaces
         Task<bool> ExcluirAsync(int id);
         Task<IEnumerable<DisciplinaDto>> ObterDisciplinasAsync(int alunoId);
         Task<IEnumerable<AlunosDisciplinaDto>> AdicionarDisciplinas(int idAluno, IEnumerable<int> idDisciplina);
+        Task RemoverDisciplinas(int idAluno, IEnumerable<int> idsDisciplinas);
     }
 }

@@ -61,5 +61,20 @@ namespace Unihub.Controllers
 
             return Ok(alunosDisciplinas);
         }
+
+        [HttpGet("{id:int}/Disciplina")]
+        public async Task<ActionResult<IEnumerable<DisciplinaDto>>> ObterDisciplinas(int id)
+        {
+            var disciplinas = await _alunoServico.ObterDisciplinasAsync(id);
+            return Ok(disciplinas);
+        }
+
+        [HttpDelete("{id:int}/Disciplina")]
+        public async Task<IActionResult> DesinscreverAluno(int id, [FromBody] IEnumerable<int> idsDisciplinas)
+        {
+            await _alunoServico.RemoverDisciplinas(id, idsDisciplinas);
+
+            return NoContent();
+        }
     }
 }
